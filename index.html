@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div class="indicador"></div>
+    <main class="pagina">
+        <header class="cabecalho">
+            <div>
+                <h1>Novo Cliente</h1>
+                <p>Preencha as informações para o cadastro</p>
+            </div>
+            <span class="status" id="status">Rascunho não salvo</span>
+        </header>
+
+        <form action="" class="card" id="form-cliente" novalidate>
+            <div class="aviso-obrigatorio">
+                <span class="obrigatorio">*</span> Indica campo obrigatório
+            </div>
+
+            <section class="secao">
+                <div>
+                    <h2>Dados pessoais</h2>
+                    <p class="descricao">Informações principais para identificar o cliente.</p>
+                </div>
+
+                <div class="campos">
+                    <div class="campo">
+                        <label for="nome">Nome Completo <span class="obrigatorio">*</span>
+                        </label>
+                        <input type="text" id="nome" name="nome" placeholder="João da Silva" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cpf">CPF <span class="obrigatorio">*</span></label>
+                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" inputmode="numeric"
+                            maxlength="14" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="nascimento">Data de nascimento</label>
+                        <input type="text" id="nascimento" name="nascimento" placeholder="DD/MM/AAAA"
+                            inputmode="numeric" maxlength="10">
+                    </div>
+
+                    <div class="campo">
+                        <label for="tipo">Tipo de cliente <span class="obrigatorio">*</span></label>
+                        <select name="tipo" id="tipo" required>
+                            <option value="pf" selected>Pessoa física</option>
+                            <option value="pj">Pessoa jurídica</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="secao">
+                <div>
+                    <h2>Contato</h2>
+                    <p class="descricao">Canais usados para comunicação e notificações.</p>
+                </div>
+
+                <div class="campos">
+                    <div class="campo">
+                        <label for="email">Email <span class="obrigatorio">*</span></label>
+                        <input type="email" name="email" id="email" placeholder="seu.email@exemplo.com" required>
+                        <p class="dica">Usaremos este e-mail para comunicações importantes</p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="celular">Celular <span class="obrigatorio">*</span></label>
+                        <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" inputmode="numeric"
+                            maxlength="15" required>
+                    </div>
+
+                    <div class="campo largura-total">
+                        <label for="telefone">Telefone Alternativo</label>
+                        <input type="tel" id="telefone" placeholder="(00) 00000-0000" inputmode="numeric"
+                            maxlength="14">
+                    </div>
+                </div>
+            </section>
+
+            <section class="secao">
+                <div>
+                    <h2>Endereço</h2>
+                    <p class="descricao">Localização para cobranças e correspondências</p>
+                </div>
+
+                <div class="campos">
+                    <div class="campo">
+                        <label for="cep">CEP <span class="obrigatorio">*</span></label>
+                        <input type="text" id="cep" name="cep" placeholder="00000-000" inputmode="numeric" maxlength="9"
+                            required>
+                    </div>
+                </div>
+            </section>
+            <button type="submit" class="botao">Cadastrar cliente</button>
+        </form>
+        </form>
+    </main>
+</body>
+
+</html>

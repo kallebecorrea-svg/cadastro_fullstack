@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&display=swap');
+ 
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: dark;
+ 
+  /* Cores como canais RGB: use com rgb(var(--nome)) ou rgb(var(--nome) / 0.5) */
+  --background: 14 14 14;
+  --foreground: 255 255 255;
+ 
+  --card: 20 20 20;
+  --secondary: 31 31 31;
+ 
+  --muted-foreground: 172 175 185;
+ 
+  --primary: 255 137 117;
+  --primary-foreground: 13 13 13;
+ 
+  --destructive: 255 43 43;
+ 
+  --border: 44 44 44;
+  --input: 46 46 46;
+  --ring: 255 138 117;
+ 
+  /* extra: o Paymark não define verde, usado só no status "salvo" */
+  --success: 74 222 128;
+ 
+  --radius: 0.75rem;
+ 
+  --font-sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+ 
+  --gradient-primary: linear-gradient(135deg, hsl(9 100% 73%) 0%, hsl(20 100% 65%) 100%);
+ 
+  --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
+  --shadow-neumorphic: 10px 34px 24px rgba(0, 0, 0, 0.15),
+    8px 21px 6px rgba(0, 0, 0, 0.01), 5px 13px 6px rgba(0, 0, 0, 0.07),
+    3px 7px 5px rgba(0, 0, 0, 0.25), 1px 3px 4px rgba(0, 0, 0, 0.43),
+    0px 1px 2px rgba(0, 0, 0, 0.49), inset 0px 1px 0px #ffffff,
+    inset 0px -2px 0px #e2e2e2, inset 0px -3px 0px #ffffff;
+}
+ 
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+ 
+* {
+  margin: 0;
+}
+ 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+ 
+body {
+  min-height: 100vh;
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+::selection {
+  background: rgb(var(--primary) / 0.3);
+}
+ 
+h1,
+h2 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+ 
+/* ---------- Indicador de progresso (barra no topo) ----------
+   No JS: document.documentElement.style.setProperty("--progresso", "40%") */
+.indicador {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  width: var(--progresso, 0%);
+  height: 3px;
+  background-image: var(--gradient-primary);
+  transition: width 0.3s ease;
+}
+ 
+/* ---------- Página ---------- */
+.pagina {
+  width: min(100% - 32px, 680px);
+  margin-inline: auto;
+  padding-block: 64px 96px;
+}
+ 
+/* ---------- Cabeçalho ---------- */
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+ 
+/* mesma escala do .h2 do Paymark: 2rem → 2.5rem → 3rem */
+.cabecalho h1 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+ 
+.cabecalho p {
+  margin-top: 12px;
+  color: rgb(var(--muted-foreground));
+  font-size: 0.875rem;
+}
+ 
+/* Status do rascunho — troque a classe pelo JS: "salvando" | "salvo" */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgb(var(--secondary));
+  border: 1px solid rgb(var(--border));
+  border-radius: 999px;
+  color: rgb(var(--muted-foreground));
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+ 
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(var(--muted-foreground) / 0.6);
+}
+ 
+.status.salvando::before {
+  background: rgb(var(--primary));
+}
+ 
+.status.salvo::before {
+  background: rgb(var(--success));
+}
+ 
+/* ---------- Card do formulário ---------- */
+.card {
+  padding: 8px 32px 32px;
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  border-radius: calc(var(--radius) * 2);
+  box-shadow: var(--shadow-card);
+}
+ 
+.aviso-obrigatorio {
+  padding-block: 20px 4px;
+  color: rgb(var(--muted-foreground));
+  font-size: 0.75rem;
+}
+ 
+.obrigatorio {
+  color: rgb(var(--primary));
+  font-weight: 600;
+}
+ 
+/* ---------- Seções ---------- */
+.secao {
+  display: grid;
+  gap: 24px;
+  padding-block: 28px;
+}
+ 
+.secao + .secao {
+  border-top: 1px solid rgb(var(--border));
+}
+ 
+.secao h2 {
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+ 
+.descricao {
+  margin-top: 4px;
+  color: rgb(var(--muted-foreground));
+  font-size: 0.8125rem;
+}
+ 
+/* ---------- Grade de campos ---------- */
+.campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 16px;
+  align-items: start;
+}
+ 
+.campo {
+  display: grid;
+  gap: 8px;
+}
+ 
+.largura-total {
+  grid-column: 1 / -1;
+}
+ 
+label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+ 
+.dica {
+  color: rgb(var(--muted-foreground));
+  font-size: 0.75rem;
+}
+ 
+/* ---------- Inputs e select ---------- */
+input,
+select {
+  width: 100%;
+  height: 48px;
+  padding: 0 18px;
+  background-color: rgb(var(--secondary));
+  color: rgb(var(--foreground));
+  border: 1px solid rgb(var(--input));
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+ 
+input::placeholder {
+  color: rgb(var(--muted-foreground) / 0.7);
+  opacity: 1;
+}
+ 
+input:hover,
+select:hover {
+  border-color: rgb(var(--muted-foreground) / 0.5);
+}
+ 
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: rgb(var(--ring));
+  box-shadow: 0 0 0 3px rgb(var(--ring) / 0.2);
+}
+ 
+/* Mantém o autopreenchimento do navegador no tema escuro */
+input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(var(--foreground));
+  caret-color: rgb(var(--foreground));
+  box-shadow: 0 0 0 1000px rgb(var(--secondary)) inset;
+}
+ 
+/* Select com seta personalizada */
+select {
+  padding-right: 44px;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23acafb9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+ 
+select option {
+  background: rgb(var(--secondary));
+  color: rgb(var(--foreground));
+}
+ 
+/* ---------- Estado de erro ----------
+   No JS: campo.classList.add("erro") + <p class="mensagem-erro"> dentro do .campo */
+.campo.erro input,
+.campo.erro select {
+  border-color: rgb(var(--destructive));
+}
+ 
+.campo.erro input:focus-visible,
+.campo.erro select:focus-visible {
+  box-shadow: 0 0 0 3px rgb(var(--destructive) / 0.25);
+}
+ 
+.mensagem-erro {
+  color: rgb(var(--destructive));
+  font-size: 0.75rem;
+}
+ 
+/* ---------- Botão principal (pílula neumórfica) ----------
+   O HTML ainda não tem botão. Se adicionar:
+   <button type="submit" class="botao">Criar cadastro</button> */
+.botao,
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #dedede 100%);
+  color: rgb(var(--primary-foreground));
+  border: 0;
+  border-radius: 999px;
+  box-shadow: var(--shadow-neumorphic);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+ 
+.botao:hover,
+button[type="submit"]:hover {
+  filter: brightness(0.95);
+}
+ 
+.botao:active,
+button[type="submit"]:active {
+  transform: translateY(1px);
+}
+ 
+.botao:focus-visible,
+button[type="submit"]:focus-visible {
+  outline: 2px solid rgb(var(--ring));
+  outline-offset: 3px;
+}
+ 
+/* ---------- Responsivo ---------- */
+@media (min-width: 768px) {
+  .cabecalho h1 {
+    font-size: 2.5rem;
+  }
+}
+ 
+@media (min-width: 1024px) {
+  .cabecalho h1 {
+    font-size: 3rem;
+  }
+}
+ 
+@media (max-width: 600px) {
+  .pagina {
+    padding-block: 40px 64px;
+  }
+ 
+  .card {
+    padding: 4px 20px 24px;
+  }
+ 
+  .campos {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+/* ---------- Acessibilidade ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
